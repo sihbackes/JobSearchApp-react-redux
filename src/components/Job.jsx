@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { addToFavoritesAction } from "../redux/actions";
 
 const Job = ({ data }) => {
-  const dispatch = useDispatch({
-    type: "ADD_TO_FAVORITES",
-    payload: { data },
-  });
+  const dispatch = useDispatch();
 
   const [isActive, setIsActive] = useState(false);
 
@@ -33,10 +31,7 @@ const Job = ({ data }) => {
         xs={3}
         className="heart-icon"
         onClick={() => {
-          dispatch({
-            type: "ADD_TO_FAVORITES",
-            payload: data,
-          });
+          dispatch(addToFavoritesAction(data));
         }}
       >
         <AiFillHeart

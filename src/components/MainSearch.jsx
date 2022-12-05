@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Job from "./Job";
 import { getJobsAction } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
+
   const dispatch = useDispatch();
+  const jobsFromRedux = useSelector((state) => state.job.jobList);
+
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
@@ -15,7 +18,7 @@ const MainSearch = () => {
     e.preventDefault();
     dispatch(getJobsAction(query));
   };
-
+  console.log(jobsFromRedux);
   return (
     <Container>
       <Row>
@@ -28,15 +31,17 @@ const MainSearch = () => {
               type="search"
               value={query}
               onChange={handleChange}
-              placeholder="type and press Enter"
+              placeholder="Type and press Enter"
             />
           </Form>
         </Col>
-        {/* <Col xs={10} className="mx-auto mb-5">
-          {jobs.map((jobData) => (
-            <Job key={jobData._id} data={jobData} />
-          ))}
-        </Col> */}
+        {jobsFromRedux && (
+          <Col xs={10} className="mx-auto mb-5">
+            {jobsFromRedux.map((jobData) => (
+              <Job key={jobData._id} data={jobData} />
+            ))}
+          </Col>
+        )}
       </Row>
     </Container>
   );
