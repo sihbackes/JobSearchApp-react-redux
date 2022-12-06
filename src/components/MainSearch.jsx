@@ -18,7 +18,7 @@ const MainSearch = () => {
     e.preventDefault();
     dispatch(getJobsAction(query));
   };
-  console.log(jobsFromRedux);
+
   return (
     <Container>
       <Row>

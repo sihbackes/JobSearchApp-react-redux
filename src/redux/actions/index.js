@@ -1,7 +1,8 @@
 export const GET_JOBS = "GET_JOBS";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
-export const GET_JOBS_COMPANY = "GET_JOBS_COMPANY";
+export const GET_BOOKS_LOADING = "GET_BOOKS_LOADING";
+export const GET_BOOKS_ERROR = "GET_BOOKS_ERROR";
 
 export const addToFavoritesAction = (data) => {
   return {
@@ -28,12 +29,35 @@ export const getJobsAction = (query) => {
           type: GET_JOBS,
           payload: data,
         });
-        console.log(data);
+        setTimeout(() => {
+          dispatch({
+            type: GET_BOOKS_LOADING,
+            payload: false,
+          });
+        }, 100);
       } else {
-        alert("Error fetching results");
+        console.log("error");
+        dispatch({
+          type: GET_BOOKS_LOADING,
+          payload: false,
+        });
+        dispatch({
+          type: GET_BOOKS_ERROR,
+          payload: true,
+        });
       }
     } catch (error) {
       console.log(error);
+
+      dispatch({
+        type: GET_BOOKS_LOADING,
+        payload: false,
+      });
+
+      dispatch({
+        type: GET_BOOKS_ERROR,
+        payload: true,
+      });
     }
   };
 };
